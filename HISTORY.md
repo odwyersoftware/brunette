@@ -1,7 +1,7 @@
 Release History
 ===============
 
-0.1.1 (unreleased)
+0.1.1 (2020-06-15)
 ------------------
 
 - Adds wheels.
