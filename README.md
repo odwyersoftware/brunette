@@ -1,5 +1,7 @@
 # brunette
 
+[![PyPI version](https://badge.fury.io/py/brunette.svg)](https://pypi.org/project/brunette/)
+
 This is the [black](https://github.com/psf/black) formatter but with some improvements:
 
 1. `--config` option supports `setup.cfg` format.
