@@ -93,7 +93,7 @@ def read_config_file(ctx, param, value):
     config.read(value)
     try:
         config = dict(config['tool:brunette'])
-    except KeyError
+    except KeyError:
         return None
     if not config:
         return None
