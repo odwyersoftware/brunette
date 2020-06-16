@@ -91,7 +91,10 @@ def read_config_file(ctx, param, value):
 
     config = configparser.ConfigParser()
     config.read(value)
-    config = dict(config['tool:brunette'])
+    try:
+        config = dict(config['tool:brunette'])
+    except KeyError
+        return None
     if not config:
         return None
 
