@@ -4,7 +4,7 @@ Release History
 0.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added `__main__` for CLI exec.
 
 
 0.1.1 (2020-06-15)
