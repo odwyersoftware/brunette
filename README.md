@@ -5,7 +5,7 @@
 This is the [black](https://github.com/psf/black) formatter but with some improvements:
 
 1. `--config` option supports `setup.cfg` format.
-2. Adds `single-quotes` to enable single quotes as the preferred.
+2. Adds `single-quotes` option to enable single quotes as the preferred.
 
 ## Installation
 
