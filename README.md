@@ -30,6 +30,21 @@ verbose = true
 single-quotes = false
 ```
 
+## How to configure in VSCode
+
+1. In your terminal type `which brunette` to get the full path to your brunette installation.
+
+In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever that value is.
+
+1. Open the [setttings](https://code.visualstudio.com/docs/getstarted/settings#_creating-user-and-workspace-settings) UI.
+
+2. Search for *black*.
+
+- Paste that path into "Black Path".
+- Set black as the Python Formatting Provider.
+
+![https://i.imgur.com/6EXoamM.png](https://i.imgur.com/6EXoamM.png)
+
 ## Why does this need to exist?
 
 - The current maintainer of black, [refuses](https://github.com/psf/black/pull/633#issuecomment-445477386) to allow a single-quotes option. Due to his own *personal* preference (a preference which most of the Python community do not share).
