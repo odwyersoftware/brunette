@@ -45,10 +45,11 @@ In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever
 
 ![https://i.imgur.com/6EXoamM.png](https://i.imgur.com/6EXoamM.png)
 
+3. That's it! Now whenever you pformat your Python code](https://stackoverflow.com/a/48764668/13405802) brunette will be used.
+
 ## Why does this need to exist?
 
 - The current maintainer of black, [refuses](https://github.com/psf/black/pull/633#issuecomment-445477386) to allow a single-quotes option. Due to his own *personal* preference (a preference which most of the Python community do not share).
 
 - The current maintainer of black, [refuses](https://github.com/psf/black/issues/683#issuecomment-542731068) to add setup.cfg support. Setup.cfg is the most widely used configuration file for Python projects. The maintainer of that library prefers "project.tolm" few people use at this time due to it's inflexibility and it requiring you to use Peotry, whatever that is.
 
-3. That's it! Now whenever you pformat your Python code](https://stackoverflow.com/a/48764668/13405802) brunette will be used.
