@@ -28,6 +28,7 @@ Example `setup.cfg`:
 line-length = 79
 verbose = true
 single-quotes = false
+# etc, etc.
 ```
 
 ## How to configure in VSCode
