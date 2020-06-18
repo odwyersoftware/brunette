@@ -45,7 +45,7 @@ In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever
 
 ![https://i.imgur.com/6EXoamM.png](https://i.imgur.com/6EXoamM.png)
 
-3. That's it! Now whenever you pformat your Python code](https://stackoverflow.com/a/48764668/13405802) brunette will be used.
+3. That's it! Now whenever you format your Python code](https://stackoverflow.com/a/48764668/13405802) brunette will be used.
 
 ## Why does this need to exist?
 
