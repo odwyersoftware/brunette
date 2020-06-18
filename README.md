@@ -51,3 +51,4 @@ In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever
 
 - The current maintainer of black, [refuses](https://github.com/psf/black/issues/683#issuecomment-542731068) to add setup.cfg support. Setup.cfg is the most widely used configuration file for Python projects. The maintainer of that library prefers "project.tolm" few people use at this time due to it's inflexibility and it requiring you to use Peotry, whatever that is.
 
+3. That's it! Now whenever you pformat your Python code](https://stackoverflow.com/a/48764668/13405802) brunette will be used.
