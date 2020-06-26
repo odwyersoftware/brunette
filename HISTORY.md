@@ -4,7 +4,8 @@ Release History
 0.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix configuration file reading when multiple option variable.
+- Update ``normalize_string_quotes`` from black.
 
 
 0.1.6 (2020-06-26)
