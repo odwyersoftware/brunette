@@ -1,7 +1,7 @@
 Release History
 ===============
 
-0.1.7 (unreleased)
+0.1.7 (2020-06-26)
 ------------------
 
 - Fix configuration file reading when multiple option variable.
