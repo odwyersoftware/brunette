@@ -99,32 +99,47 @@ def read_config_file(ctx, param, value):
         return None
 
     try:
-        if config['single-quotes'].lower() == 'true':
+        if configparser.ConfigParser.BOOLEAN_STATES[
+            config['single-quotes'].lower()
+        ]:
             black.normalize_string_quotes = normalize_string_quotes
+        del config['single-quotes']
     except KeyError:
         pass
 
     if ctx.default_map is None:
         ctx.default_map = {}
-    ctx.default_map.update(  # type: ignore  # bad types in .pyi
-        {k.replace('--', '').replace('-', '_'): v for k, v in config.items()}
-    )
+
+    for k, v in config.items():
+        k = k.replace('--', '').replace('-', '_')
+        for command_param in ctx.command.params:
+            if command_param.name == k:
+                if command_param.multiple:
+                    v = v.split(',')
+                break
+        else:
+            raise KeyError('Invalid paramater: {}'.format(k))
+
+        ctx.default_map[k] = v
+
     return value
 
 
+BLACK_MAIN = black.main
+
+
 def main():
-    config_file_opt = [p for p in black.main.params if p.name == 'config'][0]
+    config_file_opt = [p for p in BLACK_MAIN.params if p.name == 'config'][0]
     config_file_opt.callback = read_config_file
-    options = [p for p in black.main.params if p.name != 'config']
+    options = [p for p in BLACK_MAIN.params if p.name != 'config']
     options.append(config_file_opt)
-    black.main.params = options
-    return black.main()
+    BLACK_MAIN.params = options
+    return BLACK_MAIN()
 
 
 def cli_main():
-    black.freeze_support()
-    black.patch_click()
     black.main = main
+    black.patched_main()
 
 
 if __name__ == '__main__':
