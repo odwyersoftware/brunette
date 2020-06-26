@@ -1,7 +1,7 @@
 Release History
 ===============
 
-0.1.6 (unreleased)
+0.1.6 (2020-06-26)
 ------------------
 
 - Documentation updates.
