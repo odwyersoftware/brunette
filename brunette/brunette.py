@@ -16,19 +16,23 @@ def normalize_string_quotes(leaf: black.Leaf) -> None:
 
     Note: Mutates its argument.
     """
+    single_quotes = True
+    preferred_quote = "'" if single_quotes else '"'
+    other_quote = '"' if single_quotes else "'"
+
     value = leaf.value.lstrip('furbFURB')
-    if value[:3] == "'''":
+    if value[:3] == '"""':
         return
 
-    elif value[:3] == '"""':
-        orig_quote = '"""'
+    elif value[:3] == "'''":
+        orig_quote = "'''"
         new_quote = '"""'
-    elif value[0] == '"':
-        orig_quote = '"'
-        new_quote = "'"
+    elif value[0] == preferred_quote:
+        orig_quote = preferred_quote
+        new_quote = other_quote
     else:
-        orig_quote = "'"
-        new_quote = '"'
+        orig_quote = other_quote
+        new_quote = preferred_quote
     first_quote_pos = leaf.value.find(orig_quote)
     if first_quote_pos == -1:
         return  # There's an internal error
@@ -37,7 +41,7 @@ def normalize_string_quotes(leaf: black.Leaf) -> None:
     unescaped_new_quote = re.compile(rf'(([^\\]|^)(\\\\)*){new_quote}')
     escaped_new_quote = re.compile(rf'([^\\]|^)\\((?:\\\\)*){new_quote}')
     escaped_orig_quote = re.compile(rf'([^\\]|^)\\((?:\\\\)*){orig_quote}')
-    body = leaf.value[first_quote_pos + len(orig_quote): -len(orig_quote)]
+    body = leaf.value[first_quote_pos + len(orig_quote) : -len(orig_quote)]
     if 'r' in prefix.casefold():
         if unescaped_new_quote.search(body):
             # There's at least one unescaped new_quote in this raw string
@@ -61,11 +65,20 @@ def normalize_string_quotes(leaf: black.Leaf) -> None:
             unescaped_new_quote, rf'\1\\{new_quote}', new_body
         )
     if 'f' in prefix.casefold():
-        matches = re.findall(r'^{]\{(.*?)\}[^}]', new_body)
+        matches = re.findall(
+            r"""
+            (?:[^{]|^)\{  # start of the string or a non-{ followed by a single {
+                ([^{].*?)  # contents of the brackets except if begins with {{
+            \}(?:[^}]|$)  # A } followed by end of the string or a non-}
+            """,
+            new_body,
+            re.VERBOSE,
+        )
         for m in matches:
             if '\\' in str(m):
                 # Do not introduce backslashes in interpolated expressions
                 return
+
     if new_quote == '"""' and new_body[-1:] == '"':
         # edge case:
         new_body = new_body[:-1] + '\\"'
@@ -74,8 +87,8 @@ def normalize_string_quotes(leaf: black.Leaf) -> None:
     if new_escape_count > orig_escape_count:
         return  # Do not introduce more escaping
 
-    if new_escape_count == orig_escape_count and orig_quote == "'":
-        return  # Prefer single quotes
+    if new_escape_count == orig_escape_count and orig_quote == preferred_quote:
+        return
 
     leaf.value = f'{prefix}{new_quote}{new_body}{new_quote}'
 
