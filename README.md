@@ -110,8 +110,3 @@ repos:
 3. Run `pre-commit install` to install the Git pre-commit hook
 
 3. Run `pre-commit run` to validate all files
-
-## A word on gender identity and appropriate naming conversions
-
-The words `blond`, `brunette`, `black`, `red-head`, etc. are _generally_ used as shorthands for individuals who identify as female and have specific colors of head hair.  The term `brunette` _generally_ stands for a woman with deep brown hair.  The name for this tool `Brunette` is meant to be wordplay on `Black`, the original tool that this fork is based on.  The use of that term (and the hair-color motif that is employed) is not intended, in any way, to be derogatory or misogynistic.  We would like to re-purpose the term `brunette` as this tool's name with a completely neutral connotation, but, if that assumption is misguided or misplaced, please let us know in a GitHub issue.
-
