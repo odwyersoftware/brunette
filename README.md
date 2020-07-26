@@ -56,7 +56,7 @@ line-length = 79
 
 - The current maintainer of Black, [refuses](https://github.com/psf/black/pull/633#issuecomment-445477386) to allow a single-quotes option. Due to his own *personal* preference (a preference which most of the Python community do not share).
 
-- The current maintainer of Black, [refuses](https://github.com/psf/black/issues/683#issuecomment-542731068) to add setup.cfg support. Setup.cfg is the most widely used configuration file for Python projects. The maintainer of that library prefers "project.tolm" few people use at this time due to it's inflexibility and it requiring you to use Poetry, whatever that is.
+- The current maintainer of Black, [refuses](https://github.com/psf/black/issues/683#issuecomment-542731068) to add setup.cfg support. Setup.cfg is the most widely used configuration file for Python projects. The maintainer of that library prefers "pyproject.toml" few people use at this time due to it's inflexibility and it requiring you to use Poetry, whatever that is.
 
 - The current configuration file format as adopted by Black may conflict with the new _build isolation_ context with `pip`.  To avoid this, the use of a `setup.cfg` file is preferred but the policy is under review by the maintainers (https://github.com/pypa/pip/issues/8437#issuecomment-644196428).
 
