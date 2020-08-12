@@ -87,8 +87,8 @@ In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: https://github.com/odwyersoftware/brunette.git
-    rev: c0db97241f05a11e2ac223d9909f1469ace0581c
+  - repo: https://github.com/odwyersoftware/brunette
+    rev: b8fc75f460885f986a01842664e0571769b2cc12
     hooks:
       - id: brunette
   # Drop-in replacement for black with brunette
