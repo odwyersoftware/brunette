@@ -87,14 +87,10 @@ In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: local
+  - repo: https://github.com/odwyersoftware/brunette.git
+    rev: c0db97241f05a11e2ac223d9909f1469ace0581c
     hooks:
       - id: brunette
-        name: brunette
-        description: Run Brunette on Python code (fork of Black).
-        entry: brunette --config=setup.cfg
-        language: system
-        types: [python]
   # Drop-in replacement for black with brunette
   # - repo: https://github.com/psf/black
   #   rev: stable

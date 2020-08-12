@@ -1,0 +1,6 @@
+- id: brunette
+  name: brunette
+  description: Run Brunette on Python code (fork of Black).
+  entry: brunette
+  language: system
+  types: [python]
