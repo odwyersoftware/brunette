@@ -2,5 +2,5 @@
   name: brunette
   description: Run Brunette on Python code (fork of Black).
   entry: brunette
-  language: system
+  language: python
   types: [python]
