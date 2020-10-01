@@ -2,8 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import re
+import sys
 import black
 import configparser
+
+
+SINGLE_QUOTES_OP = 'single-quotes'
+SINGLE_QUOTES_ARG = '--' + SINGLE_QUOTES_OP
 
 
 def normalize_string_quotes(leaf: black.Leaf) -> None:
@@ -113,10 +118,10 @@ def read_config_file(ctx, param, value):
 
     try:
         if configparser.ConfigParser.BOOLEAN_STATES[
-            config['single-quotes'].lower()
+            config[SINGLE_QUOTES_OP].lower()
         ]:
             black.normalize_string_quotes = normalize_string_quotes
-        del config['single-quotes']
+        del config[SINGLE_QUOTES_OP]
     except KeyError:
         pass
 
@@ -142,11 +147,14 @@ BLACK_MAIN = black.main
 
 
 def main():
-    config_file_opt = [p for p in BLACK_MAIN.params if p.name == 'config'][0]
-    config_file_opt.callback = read_config_file
-    options = [p for p in BLACK_MAIN.params if p.name != 'config']
-    options.append(config_file_opt)
-    BLACK_MAIN.params = options
+    for option in BLACK_MAIN.params:
+        if option.name == 'config':
+            option.callback = read_config_file
+
+    if SINGLE_QUOTES_ARG in sys.argv:
+        black.normalize_string_quotes = normalize_string_quotes
+        sys.argv.remove(SINGLE_QUOTES_ARG)
+
     return BLACK_MAIN()
 
 
