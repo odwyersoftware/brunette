@@ -64,7 +64,8 @@ line-length = 79
 
 1. In your terminal type `which brunette` to get the full path to your brunette installation.
 
-In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever that value is.
+In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever that value is.\
+On **Windows** thats more like `C:\Python39\Scripts\brunette.exe`
 
 1. Open the [setttings](https://code.visualstudio.com/docs/getstarted/settings#_creating-user-and-workspace-settings) UI.
 
@@ -72,6 +73,7 @@ In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever
 
 - Paste that path into "Black Path".
 - Set black as the Python Formatting Provider.
+- Add `--single-quotes` to the **Black Args**
 
 ![https://i.imgur.com/6EXoamM.png](https://i.imgur.com/6EXoamM.png)
 
