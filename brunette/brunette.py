@@ -274,7 +274,7 @@ def reformat_many(sources, *args, **kwargs):
 )
 @click.option(
     '-sq',
-    'single-quotes',
+    '--single-quotes',
     is_flag=True,
     help="Prefer SINGLE quotes if it doesn't cause more escaping.",
 )
