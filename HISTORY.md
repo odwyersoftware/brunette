@@ -4,7 +4,7 @@ Release History
 0.1.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Bugfix for single-quote formatting not working.
 
 
 0.1.7 (2020-06-26)
