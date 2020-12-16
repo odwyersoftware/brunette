@@ -2,6 +2,16 @@
 # -*- coding: utf-8 -*-
 
 import re
+from pathspec import PathSpec
+from typing import (
+    List,
+    Optional,
+    Pattern,
+    Set,
+    Tuple,
+    Iterator,
+)
+
 import black
 import click
 from black import (
@@ -9,9 +19,6 @@ from black import (
     TargetVersion,
     DEFAULT_INCLUDES,
     DEFAULT_EXCLUDES,
-    Optional,
-    List,
-    Tuple,
     WriteBack,
     FileMode,
     re_compile_maybe_verbose,
@@ -21,10 +28,72 @@ from black import (
     __version__,
     out,
     Path,
-    gen_python_files_in_dir,
-    get_gitignore, err, Set, format_str, PY36_VERSIONS,
+    get_gitignore,
+    err,
+    format_str,
+    PY36_VERSIONS,
 )
 import configparser
+
+
+def gen_python_files_in_dir(
+    path: Path,
+    root: Path,
+    include: Pattern[str],
+    exclude: Pattern[str],
+    report: 'Report',
+    gitignore: PathSpec,
+) -> Iterator[Path]:
+    """Generate all files under `path` whose paths are not excluded by the
+    `exclude` regex, but are included by the `include` regex.
+
+    Symbolic links pointing outside of the `root` directory are ignored.
+
+    `report` is where output about exclusions goes.
+    """
+    for child in path.iterdir():
+        # First ignore files matching .gitignore
+        if gitignore.match_file(child.as_posix()):
+            report.path_ignored(child, 'matches the .gitignore file content')
+            continue
+
+        # Then ignore with `exclude` option.
+        try:
+            normalized_path = (
+                '/' + child.resolve().relative_to(root).as_posix()
+            )
+        except OSError as e:
+            report.path_ignored(child, f'cannot be read because {e}')
+            continue
+
+        except ValueError:
+            if child.is_symlink():
+                report.path_ignored(
+                    child, f'is a symbolic link that points outside {root}'
+                )
+                continue
+
+            raise
+
+        if child.is_dir():
+            normalized_path += '/'
+
+        exclude_match = exclude.search(normalized_path)
+        if exclude_match and exclude_match.group(0):
+            report.path_ignored(
+                child, 'matches the --exclude regular expression'
+            )
+            continue
+
+        if child.is_dir():
+            yield from gen_python_files_in_dir(
+                child, root, include, exclude, report, gitignore
+            )
+
+        elif child.is_file():
+            include_match = include.search(normalized_path)
+            if include_match:
+                yield child
 
 
 def patched_normalize_string_quotes(leaf: black.Leaf) -> None:
@@ -360,7 +429,7 @@ def main(
     report = Report(check=check, quiet=quiet, verbose=verbose)
     root = find_project_root(src)
     sources: Set[Path] = set()
-    path_empty(src, quiet, verbose, ctx)
+    path_empty(src=src, quiet=quiet, verbose=verbose, ctx=ctx, msg=None)
     for s in src:
         p = Path(s)
         if p.is_dir():
