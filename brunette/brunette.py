@@ -59,14 +59,18 @@ def gen_python_files_in_dir(
 
         # Then ignore with `exclude` option.
         try:
-            normalized_path = '/' + child.resolve().relative_to(root).as_posix()
+            normalized_path = (
+                '/' + child.resolve().relative_to(root).as_posix()
+            )
         except OSError as e:
             report.path_ignored(child, f'cannot be read because {e}')
             continue
 
         except ValueError:
             if child.is_symlink():
-                report.path_ignored(child, f'is a symbolic link that points outside {root}')
+                report.path_ignored(
+                    child, f'is a symbolic link that points outside {root}'
+                )
                 continue
 
             raise
@@ -76,11 +80,15 @@ def gen_python_files_in_dir(
 
         exclude_match = exclude.search(normalized_path)
         if exclude_match and exclude_match.group(0):
-            report.path_ignored(child, 'matches the --exclude regular expression')
+            report.path_ignored(
+                child, 'matches the --exclude regular expression'
+            )
             continue
 
         if child.is_dir():
-            yield from gen_python_files_in_dir(child, root, include, exclude, report, gitignore)
+            yield from gen_python_files_in_dir(
+                child, root, include, exclude, report, gitignore
+            )
 
         elif child.is_file():
             include_match = include.search(normalized_path)
@@ -133,13 +141,19 @@ def patched_normalize_string_quotes(leaf: black.Leaf) -> None:
         new_body = body
     else:
         # remove unnecessary escapes
-        new_body = black.sub_twice(escaped_new_quote, rf'\1\2{new_quote}', body)
+        new_body = black.sub_twice(
+            escaped_new_quote, rf'\1\2{new_quote}', body
+        )
         if body != new_body:
             # Consider the string without unnecessary escapes as the original
             body = new_body
             leaf.value = f'{prefix}{orig_quote}{body}{orig_quote}'
-        new_body = black.sub_twice(escaped_orig_quote, rf'\1\2{orig_quote}', new_body)
-        new_body = black.sub_twice(unescaped_new_quote, rf'\1\\{new_quote}', new_body)
+        new_body = black.sub_twice(
+            escaped_orig_quote, rf'\1\2{orig_quote}', new_body
+        )
+        new_body = black.sub_twice(
+            unescaped_new_quote, rf'\1\\{new_quote}', new_body
+        )
     if 'f' in prefix.casefold():
         matches = re.findall(
             r"""
@@ -212,7 +226,9 @@ def reformat_many(sources, *args, **kwargs):
 
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
-@click.option('-c', '--code', type=str, help='Format the code passed in as a string.')
+@click.option(
+    '-c', '--code', type=str, help='Format the code passed in as a string.'
+)
 @click.option(
     '-l',
     '--line-length',
