@@ -1,7 +1,7 @@
 Release History
 ===============
 
-0.1.9 (unreleased)
+0.1.9 (2020-12-16)
 ------------------
 
 - Bugfixes, fix black version to black==20.8b1.
