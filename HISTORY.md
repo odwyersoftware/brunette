@@ -1,10 +1,16 @@
 Release History
 ===============
 
-0.1.8 (unreleased)
+0.1.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Bugfixes, fix black version to black==20.8b1.
+
+
+0.1.8 (2020-12-16)
+------------------
+
+- Bugfix for single-quote formatting not working.
 
 
 0.1.7 (2020-06-26)

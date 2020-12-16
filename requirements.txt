@@ -1,4 +1,4 @@
 setuptools
 wheel
-black
+black==20.8b1
 click

@@ -20,7 +20,7 @@ with open('HISTORY.md', 'r', encoding='utf-8') as hist_file:
 
 setup(
     name='brunette',
-    version='0.1.8.dev0',
+    version='0.1.9.dev0',
     packages=find_packages(exclude=['tests*']),
     include_package_data=True,
     zip_safe=False,
@@ -39,7 +39,5 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Internet :: WWW/HTTP',
     ],
-    entry_points={'console_scripts': [
-        'brunette = brunette.brunette:main',
-    ]},
+    entry_points={'console_scripts': ['brunette = brunette.brunette:main',]},
 )
