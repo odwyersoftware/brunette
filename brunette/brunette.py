@@ -139,9 +139,20 @@ def read_config_file(ctx, param, value):
 
 
 BLACK_MAIN = black.main
+BLACK_REFORMAT_MANY = black.reformat_many
+
+
+def reformat_many(sources, *args, **kwargs):
+    """Monkeypatched to reformat multiple files using ``black.reformat_one``."""
+    for src in sources:
+        black.reformat_one(src, *args, **kwargs)
 
 
 def main():
+    # Monkeypatch the execution of many files, which uses a process execution
+    # manager that paves over this project's patching of the string normalizer
+    black.reformat_many = reformat_many
+
     config_file_opt = [p for p in BLACK_MAIN.params if p.name == 'config'][0]
     config_file_opt.callback = read_config_file
     options = [p for p in BLACK_MAIN.params if p.name != 'config']
