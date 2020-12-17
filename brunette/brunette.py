@@ -409,6 +409,10 @@ def main(
         is_pyi=pyi,
         string_normalization=not skip_string_normalization,
     )
+
+    if single_quotes:
+        black.normalize_string_quotes = patched_normalize_string_quotes
+
     if config and verbose:
         out(f'Using configuration from {config}.', bold=False, fg='blue')
     if code is not None:
@@ -450,9 +454,6 @@ def main(
         if verbose or not quiet:
             out('No Python files are present to be formatted. Nothing to do 😴')
         ctx.exit(0)
-
-    if single_quotes:
-        black.normalize_string_quotes = patched_normalize_string_quotes
 
     reformat_many(
         sources=sources,
