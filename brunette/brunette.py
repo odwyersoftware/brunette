@@ -201,15 +201,6 @@ def read_config_file(ctx, param, value):
     if not config:
         return None
 
-    try:
-        if configparser.ConfigParser.BOOLEAN_STATES[
-            config['single-quotes'].lower()
-        ]:
-            black.normalize_string_quotes = patched_normalize_string_quotes
-        del config['single-quotes']
-    except KeyError:
-        pass
-
     if ctx.default_map is None:
         ctx.default_map = {}
 
@@ -280,6 +271,12 @@ def reformat_many(sources, *args, **kwargs):
     '--skip-string-normalization',
     is_flag=True,
     help="Don't normalize string quotes or prefixes.",
+)
+@click.option(
+    '-sq',
+    '--single-quotes',
+    is_flag=True,
+    help="Prefer SINGLE quotes if it doesn't cause more escaping.",
 )
 @click.option(
     '--check',
@@ -381,6 +378,7 @@ def main(
     pyi: bool,
     py36: bool,
     skip_string_normalization: bool,
+    single_quotes: bool,
     quiet: bool,
     verbose: bool,
     include: str,
@@ -411,6 +409,10 @@ def main(
         is_pyi=pyi,
         string_normalization=not skip_string_normalization,
     )
+
+    if single_quotes:
+        black.normalize_string_quotes = patched_normalize_string_quotes
+
     if config and verbose:
         out(f'Using configuration from {config}.', bold=False, fg='blue')
     if code is not None:
