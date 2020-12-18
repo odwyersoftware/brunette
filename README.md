@@ -7,7 +7,8 @@
 This is the "[black](https://github.com/psf/black)" formatter but with some improvements:
 
 1. `--config` option supports `setup.cfg` format.
-2. Adds `single-quotes` option to enable single quotes as the preferred.
+    * Where a `single-quotes` option enables single quotes as the preferred.
+2. `--single-quotes` option to make single quotes the preferred.
 
 ## Installation
 
@@ -21,6 +22,7 @@ Use in the same way you would the 'black' formatter.
 
 ```bash
 brunette *.py --config=setup.cfg
+brunette *.py --line-length=79 --single-quotes
 ```
 
 Example `setup.cfg`:
@@ -62,16 +64,18 @@ line-length = 79
 
 ## How to configure in VSCode
 
-1. In your terminal type `which brunette` to get the full path to your brunette installation.
+1. Get the full path to your brunette installation. In your terminal type:
+  - `which brunette` (Linux)
+  - `where brunette` (Windows)
 
-In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever that value is.
+In my case this looks like `/home/work/.pyenv/shims/brunette`. On Windows thats more like `C:\Python39\Scripts\brunette.exe`. Now copy whatever that value is.\
 
-1. Open the [setttings](https://code.visualstudio.com/docs/getstarted/settings#_creating-user-and-workspace-settings) UI.
+2. Open the [setttings](https://code.visualstudio.com/docs/getstarted/settings#_creating-user-and-workspace-settings) UI.
 
-2. Search for *black*.
-
-- Paste that path into "Black Path".
-- Set black as the Python Formatting Provider.
+3. Search for *black*.
+  - Paste that path into **Black Path**.
+  - Set `black` as the Python Formatting Provider.
+  - Add arguments as `--single-quotes` you like to the **Black Args**
 
 ![https://i.imgur.com/6EXoamM.png](https://i.imgur.com/6EXoamM.png)
 
@@ -79,7 +83,7 @@ In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever
 
 ## How to configure with Pre-Commit (https://pre-commit.com)
 
-1. Run `pip install pre-commit` to install 
+1. Run `pip install pre-commit` to install
 
 2. Add a local repo option for brunette in `.pre-commit-config.yaml`
 
