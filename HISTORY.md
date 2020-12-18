@@ -1,10 +1,10 @@
 Release History
 ===============
 
-0.1.10 (unreleased)
+0.2.0 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Adds `--single-quotes` CLI option.
 
 
 0.1.9 (2020-12-16)
