@@ -22,7 +22,7 @@ Use in the same way you would the 'black' formatter.
 
 ```bash
 brunette *.py --config=setup.cfg
-brunette *.py --line-length --single-quotes
+brunette *.py --line-length=79 --single-quotes
 ```
 
 Example `setup.cfg`:
