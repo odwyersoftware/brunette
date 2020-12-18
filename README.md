@@ -64,18 +64,18 @@ line-length = 79
 
 ## How to configure in VSCode
 
-1. In your terminal type `which brunette` to get the full path to your brunette installation.
+1. Get the full path to your brunette installation. In your terminal type:
+  - `which brunette` (Linux)
+  - `where brunette` (Windows)
 
-In my case this looks like `/home/work/.pyenv/shims/brunette`. Now copy whatever that value is.\
-On **Windows** thats more like `C:\Python39\Scripts\brunette.exe`
+In my case this looks like `/home/work/.pyenv/shims/brunette`. On Windows thats more like `C:\Python39\Scripts\brunette.exe`. Now copy whatever that value is.\
 
-1. Open the [setttings](https://code.visualstudio.com/docs/getstarted/settings#_creating-user-and-workspace-settings) UI.
+2. Open the [setttings](https://code.visualstudio.com/docs/getstarted/settings#_creating-user-and-workspace-settings) UI.
 
-2. Search for *black*.
-
-- Paste that path into "Black Path".
-- Set black as the Python Formatting Provider.
-- Add `--single-quotes` to the **Black Args**
+3. Search for *black*.
+  - Paste that path into **Black Path**.
+  - Set `black` as the Python Formatting Provider.
+  - Add arguments as `--single-quotes` you like to the **Black Args**
 
 ![https://i.imgur.com/6EXoamM.png](https://i.imgur.com/6EXoamM.png)
 
