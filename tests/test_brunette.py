@@ -1,8 +1,9 @@
 import os
 import tempfile
-import unittest
 import subprocess
 import importlib.util
+
+import pytest
 
 NAME = 'brunette'
 SINGLE_QUOTES = 'single-quotes'
@@ -10,10 +11,9 @@ SINGLE_QUOTES_OP = '--' + SINGLE_QUOTES
 THIS_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
-class Brunettest(unittest.TestCase):
-    def __init__(self, *args, **kwargs):
-        super(Brunettest, self).__init__(*args, **kwargs)
-
+class Test:
+    @pytest.fixture(autouse=True)
+    def setup(self):
         # Try making sure we test on dev!
         self._dev = os.path.normcase(
             os.path.join(os.path.dirname(THIS_DIR), NAME)
@@ -46,7 +46,7 @@ class Brunettest(unittest.TestCase):
         )
 
         for result, expected in zip(results_single, expected_single):
-            self.assertEqual(result, expected)
+            assert result == expected
 
     def test_default_quotes(self):
         test_code = _get_demo_content('string_quotes_in')
@@ -54,7 +54,7 @@ class Brunettest(unittest.TestCase):
         results_default = _get_result_lines([NAME, '--code', test_code])
 
         for result, expected in zip(results_default, expected_def):
-            self.assertEqual(result, expected)
+            assert result == expected
 
     def test_config_default_quotes(self):
         test_code = _get_demo_content('string_quotes_in')
@@ -68,7 +68,7 @@ class Brunettest(unittest.TestCase):
             [NAME, f'--config={config_path}', '--code', test_code]
         )
         for result, expected in zip(results_default, expected_def):
-            self.assertEqual(result, expected)
+            assert result == expected
 
         os.unlink(config_path)
 
@@ -84,7 +84,7 @@ class Brunettest(unittest.TestCase):
             [NAME, f'--config={config_path}', '--code', test_code]
         )
         for result, expected in zip(results_default, expected_single):
-            self.assertEqual(result, expected)
+            assert result == expected
 
         os.unlink(config_path)
 
@@ -103,7 +103,3 @@ def _get_demo_content(file_name: str):
     path = os.path.join(THIS_DIR, 'data', file_name + '.py')
     with open(path) as file_obj:
         return file_obj.read()
-
-
-if __name__ == '__main__':
-    unittest.main(verbosity=2)
