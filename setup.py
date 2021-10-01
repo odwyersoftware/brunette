@@ -12,6 +12,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 with open('requirements.txt') as f:
     install_requires = f.read().splitlines()
 
+with open('requirements-dev.txt') as f:
+    dev_install_requires = [
+        l
+        for l in f.read().splitlines()
+        if not (l.startswith('-r') or l.startswith('#'))
+    ]
+
 with open('README.md', 'r', encoding='utf-8') as rm_file:
     readme = rm_file.read()
 
@@ -32,6 +39,7 @@ setup(
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
     install_requires=install_requires,
+    extras_require={'dev': dev_install_requires},
     classifiers=[
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
