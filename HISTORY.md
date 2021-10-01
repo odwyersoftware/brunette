@@ -4,7 +4,7 @@ Release History
 0.2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Loosen requirements pin on "black" version.
 
 
 0.2.0 (2020-12-18)
