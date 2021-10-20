@@ -389,7 +389,7 @@ def main(
     )
 
     if single_quotes:
-        black.normalize_string_quotes = patched_normalize_string_quotes
+        black.string.normalize_string_quotes = patched_normalize_string_quotes
 
     if config and verbose:
         out(f'Using configuration from {config}.', bold=False, fg='blue')
