@@ -8,5 +8,3 @@ mccabe==0.6.1
 zest.releaser==6.20.1
 ipdb==0.13.2
 tox==3.15.0
-# Version pin here, providing consistent formatting for brunette code
-black==20.8b1
