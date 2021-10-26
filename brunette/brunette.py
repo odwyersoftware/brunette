@@ -14,6 +14,10 @@ from typing import (
 
 import black
 import click
+import black.strings
+import black.trans
+import black.linegen
+from black.mode import TargetVersion
 from black import (
     DEFAULT_LINE_LENGTH,
     TargetVersion,
@@ -31,9 +35,10 @@ from black import (
     get_gitignore,
     err,
     format_str,
-    PY36_VERSIONS,
 )
 import configparser
+
+PY36_VERSIONS = {version for version in TargetVersion if version.value >= 6}
 
 
 def gen_python_files_in_dir(
@@ -96,7 +101,7 @@ def gen_python_files_in_dir(
                 yield child
 
 
-def patched_normalize_string_quotes(leaf: black.Leaf) -> None:
+def patched_normalize_string_quotes(s: str) -> str:
     """
     Prefer SINGLE quotes but only if it doesn't cause more escaping.
     Prefer double quotes for docstrings.
@@ -110,9 +115,10 @@ def patched_normalize_string_quotes(leaf: black.Leaf) -> None:
     preferred_quote = "'" if single_quotes else '"'
     other_quote = '"' if single_quotes else "'"
 
-    value = leaf.value.lstrip('furbFURB')
+    value = s.lstrip('furbFURB')
+
     if value[:3] == '"""':
-        return
+        return s
 
     elif value[:3] == "'''":
         orig_quote = "'''"
@@ -123,43 +129,44 @@ def patched_normalize_string_quotes(leaf: black.Leaf) -> None:
     else:
         orig_quote = other_quote
         new_quote = preferred_quote
-    first_quote_pos = leaf.value.find(orig_quote)
+    first_quote_pos = s.find(orig_quote)
     if first_quote_pos == -1:
-        return  # There's an internal error
+        return s  # There's an internal error
 
-    prefix = leaf.value[:first_quote_pos]
+    prefix = s[:first_quote_pos]
     unescaped_new_quote = re.compile(rf'(([^\\]|^)(\\\\)*){new_quote}')
     escaped_new_quote = re.compile(rf'([^\\]|^)\\((?:\\\\)*){new_quote}')
     escaped_orig_quote = re.compile(rf'([^\\]|^)\\((?:\\\\)*){orig_quote}')
-    body = leaf.value[first_quote_pos + len(orig_quote) : -len(orig_quote)]
+    body = s[first_quote_pos + len(orig_quote) : -len(orig_quote)]
     if 'r' in prefix.casefold():
         if unescaped_new_quote.search(body):
             # There's at least one unescaped new_quote in this raw string
             # so converting is impossible
-            return
+            return s
+
         # Do not introduce or remove backslashes in raw strings
         new_body = body
     else:
         # remove unnecessary escapes
-        new_body = black.sub_twice(
+        new_body = black.strings.sub_twice(
             escaped_new_quote, rf'\1\2{new_quote}', body
         )
         if body != new_body:
             # Consider the string without unnecessary escapes as the original
             body = new_body
-            leaf.value = f'{prefix}{orig_quote}{body}{orig_quote}'
-        new_body = black.sub_twice(
+            s = f'{prefix}{orig_quote}{body}{orig_quote}'
+        new_body = black.strings.sub_twice(
             escaped_orig_quote, rf'\1\2{orig_quote}', new_body
         )
-        new_body = black.sub_twice(
+        new_body = black.strings.sub_twice(
             unescaped_new_quote, rf'\1\\{new_quote}', new_body
         )
     if 'f' in prefix.casefold():
         matches = re.findall(
             r"""
-            (?:[^{]|^)\{  # start of the string or a non-{ followed by a single {
+            (?:(?<!\{)|^)\{  # start of the string or a non-{ followed by a single {
                 ([^{].*?)  # contents of the brackets except if begins with {{
-            \}(?:[^}]|$)  # A } followed by end of the string or a non-}
+            \}(?:(?!\})|$)  # A } followed by end of the string or a non-}
             """,
             new_body,
             re.VERBOSE,
@@ -167,7 +174,7 @@ def patched_normalize_string_quotes(leaf: black.Leaf) -> None:
         for m in matches:
             if '\\' in str(m):
                 # Do not introduce backslashes in interpolated expressions
-                return
+                return s
 
     if new_quote == '"""' and new_body[-1:] == '"':
         # edge case:
@@ -175,12 +182,12 @@ def patched_normalize_string_quotes(leaf: black.Leaf) -> None:
     orig_escape_count = body.count('\\')
     new_escape_count = new_body.count('\\')
     if new_escape_count > orig_escape_count:
-        return  # Do not introduce more escaping
+        return s  # Do not introduce more escaping
 
     if new_escape_count == orig_escape_count and orig_quote == preferred_quote:
-        return
+        return s
 
-    leaf.value = f'{prefix}{new_quote}{new_body}{new_quote}'
+    return f'{prefix}{new_quote}{new_body}{new_quote}'
 
 
 def read_config_file(ctx, param, value):
@@ -411,7 +418,8 @@ def main(
     )
 
     if single_quotes:
-        black.normalize_string_quotes = patched_normalize_string_quotes
+        black.linegen.normalize_string_quotes = patched_normalize_string_quotes
+        black.trans.normalize_string_quotes = patched_normalize_string_quotes
 
     if config and verbose:
         out(f'Using configuration from {config}.', bold=False, fg='blue')
