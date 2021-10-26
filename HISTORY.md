@@ -1,7 +1,7 @@
 Release History
 ===============
 
-0.2.2 (unreleased)
+0.2.2 (2021-10-26)
 ------------------
 
 - Bugfix, support for "black" version >=21.
