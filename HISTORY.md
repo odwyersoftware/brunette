@@ -4,7 +4,7 @@ Release History
 0.2.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Bugfix, require black>=21.5b1
 
 
 0.2.2 (2021-10-26)
