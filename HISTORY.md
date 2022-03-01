@@ -1,7 +1,7 @@
 Release History
 ===============
 
-0.2.3 (unreleased)
+0.2.3 (2022-03-01)
 ------------------
 
 - Bugfix, require black>=21.5b1
