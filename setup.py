@@ -14,9 +14,9 @@ with open('requirements.txt') as f:
 
 with open('requirements-dev.txt') as f:
     dev_install_requires = [
-        l
-        for l in f.read().splitlines()
-        if not (l.startswith('-r') or l.startswith('#'))
+        line
+        for line in f.read().splitlines()
+        if not (line.startswith('-r') or line.startswith('#'))
     ]
 
 with open('README.md', 'r', encoding='utf-8') as rm_file:
