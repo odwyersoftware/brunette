@@ -193,6 +193,8 @@ def patched_normalize_string_quotes(s: str) -> str:
 def read_config_file(ctx, param, value):
     if not value:
         root = black.find_project_root(ctx.params.get('src', ()))
+        if isinstance(root, tuple):
+            root = root[0]
         path = root / 'setup.cfg'
         if path.is_file():
             value = str(path)
@@ -438,6 +440,8 @@ def main(
         ctx.exit(2)
     report = Report(check=check, quiet=quiet, verbose=verbose)
     root = find_project_root(src)
+    if isinstance(root, tuple):
+        root = root[0]
     sources: Set[Path] = set()
     path_empty(src=src, quiet=quiet, verbose=verbose, ctx=ctx, msg=None)
     for s in src:
