@@ -1,7 +1,7 @@
 Release History
 ===============
 
-0.2.4 (unreleased)
+0.2.4 (2022-03-09)
 ------------------
 
 - Fix for black breaking change ``black.find_project_root``.
