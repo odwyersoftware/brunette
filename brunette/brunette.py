@@ -443,7 +443,13 @@ def main(
     if isinstance(root, tuple):
         root = root[0]
     sources: Set[Path] = set()
-    path_empty(src=src, quiet=quiet, verbose=verbose, ctx=ctx, msg=None)
+    path_empty(
+        src=src,
+        quiet=quiet,
+        verbose=verbose,
+        ctx=ctx,
+        msg="No Path provided. Nothing to do 😴",
+    )
     for s in src:
         p = Path(s)
         if p.is_dir():
