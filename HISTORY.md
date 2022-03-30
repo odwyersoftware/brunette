@@ -4,7 +4,7 @@ Release History
 0.2.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix for black version `22.1.0`+.
 
 
 0.2.4 (2022-03-09)
