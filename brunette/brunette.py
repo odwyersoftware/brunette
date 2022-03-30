@@ -448,7 +448,7 @@ def main(
         quiet=quiet,
         verbose=verbose,
         ctx=ctx,
-        msg="No Path provided. Nothing to do 😴",
+        msg='No Path provided. Nothing to do 😴',
     )
     for s in src:
         p = Path(s)
