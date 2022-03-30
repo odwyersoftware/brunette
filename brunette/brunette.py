@@ -20,7 +20,6 @@ import black.linegen
 from black.mode import TargetVersion
 from black import (
     DEFAULT_LINE_LENGTH,
-    TargetVersion,
     DEFAULT_INCLUDES,
     DEFAULT_EXCLUDES,
     WriteBack,
