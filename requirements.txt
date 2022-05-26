@@ -1,5 +1,4 @@
 setuptools
 wheel
-# Do not pin this one, leave black version up to user
-black>=21.5b1
+black<22.0.0  # Versions above this do not function
 click
