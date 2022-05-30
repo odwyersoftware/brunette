@@ -47,5 +47,9 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Internet :: WWW/HTTP',
     ],
-    entry_points={'console_scripts': ['brunette = brunette.brunette:main',]},
+    entry_points={
+        'console_scripts': [
+            'brunette = brunette.brunette:main',
+        ]
+    },
 )
