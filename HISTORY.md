@@ -4,7 +4,7 @@ Release History
 0.2.7 (unreleased)
 ------------------
 
-- Fix black version to black<22.1.0, versions above do not function.
+- Fix black version to black==21.12b0, versions above do not function.
 
 
 0.2.6 (2022-05-26)
