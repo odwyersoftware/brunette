@@ -92,7 +92,7 @@ In my case this looks like `/home/work/.pyenv/shims/brunette`. On Windows thats 
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/odwyersoftware/brunette
-    rev: b8fc75f460885f986a01842664e0571769b2cc12
+    rev: 0.2.7
     hooks:
       - id: brunette
   # Drop-in replacement for black with brunette
