@@ -1,7 +1,7 @@
 Release History
 ===============
 
-0.2.8 (unreleased)
+0.2.8 (2022-11-07)
 ------------------
 
 - Fixed setup.py description.
