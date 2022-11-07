@@ -4,7 +4,7 @@ Release History
 0.2.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed setup.py description.
 
 
 0.2.7 (2022-05-30)
